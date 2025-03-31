@@ -431,39 +431,40 @@
     });
 
   </script>
-  <script>
-    window.onload = function () {
-    // Cek apakah ada hash di URL
-    if (!window.location.hash) {
-        return;
-    }
+ <script>
+  window.onload = function () {
+      // Cek apakah ada hash di URL
+      if (!window.location.hash) {
+          return;
+      }
 
-    // Ambil parameter dari hash
-    const hashParams = new URLSearchParams(window.location.hash.substring(1));
-    const nama = hashParams.get('n') || '';
-    const pronoun = hashParams.get('p') || '';
+      // Ambil parameter dari hash
+      const hashParams = new URLSearchParams(window.location.hash.substring(1));
+      let nama = hashParams.get('n') || '';
+      const pronoun = hashParams.get('p') || '';
 
-    // Ambil elemen target
-    const namaContainer = document.querySelector('.hero h5 span');
-    if (namaContainer) {
-        // Jika pronoun kosong, hanya tampilkan nama
-        namaContainer.innerText = pronoun ? `${pronoun} ${nama}` : `${nama}`;
-    }
+      // Ganti underscore dengan spasi untuk ditampilkan di halaman
+      nama = nama.replace(/_/g, " ");
 
-    // Set nilai input (jika ada)
-    const namaInput = document.querySelector('#nama');
-    if (namaInput) {
-        namaInput.value = nama;
-    }
+      // Ambil elemen target
+      const namaContainer = document.querySelector('.hero h5 span');
+      if (namaContainer) {
+          namaContainer.innerText = pronoun ? `${pronoun} ${nama}` : nama;
+      }
 
-    // Pastikan hash tetap ada di URL setelah refresh
-    if (!window.location.href.includes('#')) {
-        history.replaceState(null, null, window.location.pathname + window.location.hash);
-    }
-};
+      // Set nilai input (jika ada)
+      const namaInput = document.querySelector('#nama');
+      if (namaInput) {
+          namaInput.value = nama;
+      }
+       // Perbarui URL agar perubahan langsung terlihat
+       const newHash = `#p=${encodeURIComponent(pronoun)}&n=${encodeURIComponent(nama)}`;
+        history.replaceState(null, null, window.location.pathname + newHash);
+  };
+</script>
 
+</script>
 
-  </script>
 
 </body>
 
